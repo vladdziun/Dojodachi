@@ -34,6 +34,7 @@ namespace Dojodachi.Controllers
         [HttpGet]
         public IActionResult Game()
         {
+            int? Meals = HttpContext.Session.GetInt32("Meals");
             int? Energy = HttpContext.Session.GetInt32("Energy");
             int? Fullness = HttpContext.Session.GetInt32("Full");
             int? Happiness = HttpContext.Session.GetInt32("Hap");
@@ -43,10 +44,20 @@ namespace Dojodachi.Controllers
                 string message = "You WON!";
                 HttpContext.Session.SetString("Message", message);
             }
-            if(Fullness <= 0|| Happiness <= 0)
+            if (Fullness <= 0 || Happiness <= 0)
             {
                 string message = "You LOSE!";
                 HttpContext.Session.SetString("Message", message);
+            }
+            if (Energy <= 0)
+            {
+                HttpContext.Session.SetInt32("Energy", 0);
+                ViewBag.Energy = HttpContext.Session.GetInt32("Energy");
+            }
+            if (Meals <= 0)
+            {
+                HttpContext.Session.SetInt32("Meals", 0);
+                ViewBag.Meals = HttpContext.Session.GetInt32("Meals");
             }
 
 
